@@ -11,14 +11,21 @@ const { getPublishInfo } = require('./helpers');
         const currentTime = new Date();
         console.log(`measure datetime: ${currentTime}`)
         console.log(version);
-        const browser = await puppeteer.launch();
+        const browser = await puppeteer.launch({headless: false});
         const page = await browser.newPage();
+        const tick = Date.now();
         await page.goto(baseUrl);
-        await page.waitFor(3000);
+
+        const loadTime = await page.evaluate(() => {
+            const { loadEventEnd, navigationStart } = performance.timing;
+            return loadEventEnd - navigationStart;
+        });
+
+        console.log(`loaded in ${loadTime} ms`);
 
         const screenshotFolderPath = `screenshots/${version}`;
         const screenshotName = 'home.png';
-        const screenshotPath = `${screenshotFolderPath}/${screenshotName}`
+        const screenshotPath = `${screenshotFolderPath}/${screenshotName}`;
 
         mkdirp(screenshotFolderPath);
         await page.screenshot({ path: screenshotPath });
