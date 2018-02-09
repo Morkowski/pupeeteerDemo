@@ -1,0 +1,14 @@
+{
+  "name": "pupeteerDemo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": {},
+  "license": "MIT",
+  "dependencies": {
+    "mkdirp": "^0.5.1",
+    "puppeteer": "^1.0.0"
+  },
+  "engines": {
+    "node": ">=7.6.0"
+  }
+}
